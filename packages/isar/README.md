@@ -1,3 +1,5 @@
+> ⚠️ This repository is a fork of the [original project](https://github.com/isar/isar), focusing primarily on bug fixes and small updates for version 3. Our objective is to enhance the stability and reliability of the codebase while implementing minor improvements to refine the user experience.
+
 <p align="center">
   <a href="https://isar.dev">
     <img src="https://raw.githubusercontent.com/isar/isar/main/.github/assets/isar.svg?sanitize=true" height="128">
