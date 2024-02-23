@@ -1,4 +1,4 @@
-> ⚠️ This repository is a fork of the [original project](https://github.com/isar/isar), focusing primarily on bug fixes and small updates for version 3. Our objective is to enhance the stability and reliability of the codebase while implementing minor improvements to refine the user experience.
+> ⚠️ This repository is a fork of the [original project](https://github.com/isar/isar), focusing primarily on bug fixes and small updates for version 3. Our objective is to enhance the stability and reliability of the codebase while implementing minor improvements to refine the user experience. See details below on how to use this community fork.
 
 <p align="center">
   <a href="https://isar.dev">
@@ -65,7 +65,7 @@ Holy smokes you're here! Let's get started on using the coolest Flutter database
 ### 1. Add to pubspec.yaml
 
 ```yaml
-isar_version: &isar_version 3.1.0 # define the version to be used
+isar_version: &isar_version 3.1.1 # define the version to be used
 
 dependencies:
   isar: *isar_version
@@ -74,6 +74,26 @@ dependencies:
 dev_dependencies:
   isar_generator: *isar_version
   build_runner: any
+
+# Add overrides to use the community fork
+dependency_overrides:
+  isar:
+    git:
+      url: https://github.com/isar-community/isar.git
+      ref: *isarversion
+      path: packages/isar
+
+  isar_flutter_libs:
+    git:
+      url: https://github.com/isar-community/isar.git
+      ref: *isarversion
+      path: packages/isar_flutter_libs
+
+  isar_generator:
+    git:
+      url: https://github.com/isar-community/isar.git
+      ref: *isarversion
+      path: packages/isar_generator
 ```
 
 ### 2. Annotate a Collection
