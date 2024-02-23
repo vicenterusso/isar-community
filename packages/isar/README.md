@@ -80,19 +80,19 @@ dependency_overrides:
   isar:
     git:
       url: https://github.com/isar-community/isar.git
-      ref: *isarversion
+      ref: *isar_version
       path: packages/isar
 
   isar_flutter_libs:
     git:
       url: https://github.com/isar-community/isar.git
-      ref: *isarversion
+      ref: *isar_version
       path: packages/isar_flutter_libs
 
   isar_generator:
     git:
       url: https://github.com/isar-community/isar.git
-      ref: *isarversion
+      ref: *isar_version
       path: packages/isar_generator
 ```
 
