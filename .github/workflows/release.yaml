@@ -105,10 +105,9 @@ jobs:
         working-directory: packages/isar
       - name: Download Binaries
         run: sh tool/download_binaries.sh
-      - name: pub.dev credentials
+      - name: unpub credentials
         run: |
-          mkdir -p $HOME/.config/dart
-          echo '${{ secrets.PUB_JSON }}' >> $HOME/.config/dart/pub-credentials.json
+          dart pub token add --env-var=secret.PUB_JSON https://contactulater.app/
       - name: Publish isar
         run: dart pub publish --force
         working-directory: packages/isar
