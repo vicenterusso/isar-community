@@ -111,11 +111,17 @@ jobs:
         run: |
           dart pub token add --env-var=PUB_JSON https://contactulater.app/
       - name: Publish isar
+        env:
+          PUB_JSON: ${{ secrets.PUB_JSON }}
         run: dart pub publish --force
         working-directory: packages/isar
       - name: Publish isar_generator
+        env:
+          PUB_JSON: ${{ secrets.PUB_JSON }}
         run: dart pub publish --force
         working-directory: packages/isar_generator
       - name: Publish isar_flutter_libs
+        env:
+          PUB_JSON: ${{ secrets.PUB_JSON }}
         run: dart pub publish --force
         working-directory: packages/isar_flutter_libs
