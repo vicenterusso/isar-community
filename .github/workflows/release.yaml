@@ -53,6 +53,8 @@ jobs:
             artifact_name: isar_windows_x64.dll
             script: build_windows.sh x64
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - name: Prepare Build
