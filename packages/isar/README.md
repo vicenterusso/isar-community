@@ -65,35 +65,22 @@ Holy smokes you're here! Let's get started on using the coolest Flutter database
 ### 1. Add to pubspec.yaml
 
 ```yaml
-isar_version: &isar_version 3.1.1 # define the version to be used
+isar_version: &isar_version 3.1.3 # define the version to be used
 
 dependencies:
-  isar: *isar_version
-  isar_flutter_libs: *isar_version # contains Isar Core
+  isar: 
+    version: *isar_version
+    hosted: https://isar-community.dev/
+  isar_flutter_libs: # contains Isar Core
+    version: *isar_version
+    hosted: https://isar-community.dev/
 
 dev_dependencies:
-  isar_generator: *isar_version
+  isar_generator: 
+    version: *isar_version
+    hosted: https://isar-community.dev/
   build_runner: any
 
-# Add overrides to use the community fork
-dependency_overrides:
-  isar:
-    git:
-      url: https://github.com/isar-community/isar.git
-      ref: *isar_version
-      path: packages/isar
-
-  isar_flutter_libs:
-    git:
-      url: https://github.com/isar-community/isar.git
-      ref: *isar_version
-      path: packages/isar_flutter_libs
-
-  isar_generator:
-    git:
-      url: https://github.com/isar-community/isar.git
-      ref: *isar_version
-      path: packages/isar_generator
 ```
 
 ### 2. Annotate a Collection

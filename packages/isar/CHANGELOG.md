@@ -1,3 +1,7 @@
+## 3.1.3
+
+- Maintenance release, mainly adapts build dependencies
+
 ## 3.1.0+1
 
 ### Fixes
