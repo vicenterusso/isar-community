@@ -64,6 +64,19 @@ export default defineUserConfig({
                 text: "Telegram",
                 link: "https://t.me/isardb",
             },
+            {
+                text: "3.x",
+                children: [
+                    {
+                        text: "v4.x",
+                        link: "https://isar-community.dev/",
+                    },
+                    {
+                        text: "v3.x",
+                        link: "https://isar-community.dev/v3",
+                    },
+                ],
+            },
         ],
         sidebarDepth: 1,
 
