@@ -1,3 +1,7 @@
+## 3.1.4
+
+- Fix inspector URL
+
 ## 3.1.3
 
 - Maintenance release, mainly adapts build dependencies
