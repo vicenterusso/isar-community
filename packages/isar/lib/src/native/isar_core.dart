@@ -37,7 +37,7 @@ const nullBool = IsarObject_NULL_BOOL;
 const falseBool = IsarObject_FALSE_BOOL;
 const trueBool = IsarObject_TRUE_BOOL;
 
-const String _githubUrl = 'https://github.com/isar/isar/releases/download';
+const String _githubUrl = 'https://github.com/isar-community/isar/releases/download';
 
 bool _isarInitialized = false;
 
@@ -119,9 +119,7 @@ String _getLibraryDownloadPath(Map<Abi, String> libraries) {
     if (Platform.script.path.isEmpty) {
       return name;
     }
-    var dir = Platform.script.pathSegments
-        .sublist(0, Platform.script.pathSegments.length - 1)
-        .join(Platform.pathSeparator);
+    var dir = Platform.script.pathSegments.sublist(0, Platform.script.pathSegments.length - 1).join(Platform.pathSeparator);
     if (!Platform.isWindows) {
       // Not on windows, add leading platform path separator
       dir = '${Platform.pathSeparator}$dir';
