@@ -71,10 +71,10 @@ jobs:
           asset_name: ${{ matrix.artifact_name }}
           tag: ${{ github.ref }}
 
-  # testlab:
-  #   needs: build_binaries
-  #   uses: ./.github/workflows/testlab.yaml
-  #   secrets: inherit
+  testlab:
+    needs: build_binaries
+    uses: ./.github/workflows/testlab.yaml
+    secrets: inherit
 
   build_inspector:
     name: Build Inspector
