@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  intl: any
-  isar: any
+  intl: 0.18.0
+  isar: ">=3.1.4 <4.0.0"
   isar_flutter_libs: any
   json_annotation: ^4.7.0
   meta: ^1.8.0
