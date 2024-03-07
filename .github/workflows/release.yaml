@@ -71,11 +71,6 @@ jobs:
           asset_name: ${{ matrix.artifact_name }}
           tag: ${{ github.ref }}
 
-  # testlab:
-  #   needs: build_binaries
-  #   uses: ./.github/workflows/testlab.yaml
-  #   secrets: inherit
-
   build_inspector:
     name: Build Inspector
     needs: build_binaries
@@ -94,29 +89,3 @@ jobs:
           token: ${{ secrets.TOKEN }}
           target-folder: ${{ github.ref_name }}
           clean: false
-
-  # publish:
-  #   name: Publish
-  #   needs: build_inspector
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: subosito/flutter-action@v2
-  #     - name: pub get
-  #       run: dart pub get
-  #       working-directory: packages/isar
-  #     - name: Download Binaries
-  #       run: sh tool/download_binaries.sh
-  #     - name: pub.dev credentials
-  #       run: |
-  #         mkdir -p $HOME/.config/dart
-  #         echo '${{ secrets.PUB_JSON }}' >> $HOME/.config/dart/pub-credentials.json
-  #     - name: Publish isar
-  #       run: dart pub publish --force
-  #       working-directory: packages/isar
-  #     - name: Publish isar_generator
-  #       run: dart pub publish --force
-  #       working-directory: packages/isar_generator
-  #     - name: Publish isar_flutter_libs
-  #       run: dart pub publish --force
-  #       working-directory: packages/isar_flutter_libs
