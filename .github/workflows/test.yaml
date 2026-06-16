@@ -1,15 +1,15 @@
 name: Dart CI
 
 env:
-  FLUTTER_OVERRIDE: "3.35.1"
+  FLUTTER_OVERRIDE: "3.44.0"
 
 on:
   push:
     branches:
-      - v3*
+      - *
   pull_request:
     branches:
-      - v3*
+      - *
 
 jobs:
   version:
