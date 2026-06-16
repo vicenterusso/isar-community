@@ -268,8 +268,9 @@ jobs:
           bash tool/build_macos.sh
           install_name_tool -id @rpath/libisar.dylib libisar_macos.dylib
           cp libisar_macos.dylib packages/isar_community_flutter_libs/macos/libisar.dylib
-          mkdir -p packages/isar_community_flutter_libs/macos/isar.xcframework/macos-arm64_x86_64
-          cp libisar_macos.dylib packages/isar_community_flutter_libs/macos/isar.xcframework/macos-arm64_x86_64/libisar.dylib
+          xcodebuild -create-xcframework \
+            -library libisar_macos.dylib \
+            -output packages/isar_community_flutter_libs/macos/isar.xcframework
       - name: Prepare Tests
         run: sh tool/prepare_tests.sh
       - name: Run Flutter Driver tests
@@ -325,8 +326,9 @@ jobs:
           bash tool/build_macos.sh
           install_name_tool -id @rpath/libisar.dylib libisar_macos.dylib
           cp libisar_macos.dylib packages/isar_community_flutter_libs/macos/libisar.dylib
-          mkdir -p packages/isar_community_flutter_libs/macos/isar.xcframework/macos-arm64_x86_64
-          cp libisar_macos.dylib packages/isar_community_flutter_libs/macos/isar.xcframework/macos-arm64_x86_64/libisar.dylib
+          xcodebuild -create-xcframework \
+            -library libisar_macos.dylib \
+            -output packages/isar_community_flutter_libs/macos/isar.xcframework
       - name: Prepare Tests
         run: sh tool/prepare_tests.sh
       - name: Enable Swift Package Manager
