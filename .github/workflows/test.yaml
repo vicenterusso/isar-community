@@ -1,7 +1,7 @@
 name: Dart CI
 
 env:
-  FLUTTER_OVERRIDE: "3.35.1"
+  FLUTTER_OVERRIDE: "3.44.0"
 
 on: [push, pull_request]
 
@@ -276,6 +276,7 @@ jobs:
       - name: Run Flutter Driver tests
         run: |
           flutter config --enable-macos-desktop
+          flutter config --no-enable-swift-package-manager
           flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
 
