@@ -200,7 +200,7 @@ jobs:
       - name: Prepare Tests
         run: sh tool/prepare_tests.sh
       - name: Run Flutter Integration tests
-        run: flutter test -d ios integration_test/integration_test.dart --dart-define STRESS=true
+        run: flutter test -d 'iPhone 16' integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
 
   integration_test_android:
@@ -315,7 +315,7 @@ jobs:
       - name: Enable Swift Package Manager
         run: flutter config --enable-swift-package-manager
       - name: Run Flutter Integration tests
-        run: flutter test -d ios integration_test/integration_test.dart --dart-define STRESS=true
+        run: flutter test -d 'iPhone 16' integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
 
   integration_test_macos_spm:
