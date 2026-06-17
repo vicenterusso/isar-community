@@ -327,8 +327,9 @@ jobs:
           bash tool/build_macos.sh
           install_name_tool -id @rpath/libisar.dylib libisar_macos.dylib
           cp libisar_macos.dylib packages/isar_community_flutter_libs/macos/libisar.dylib
+          cp libisar_macos.dylib libisar.dylib
           xcodebuild -create-xcframework \
-            -library libisar_macos.dylib \
+            -library libisar.dylib \
             -output packages/isar_community_flutter_libs/macos/isar.xcframework
       - name: Prepare Tests
         run: sh tool/prepare_tests.sh
