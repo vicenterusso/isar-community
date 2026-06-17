@@ -278,7 +278,7 @@ jobs:
         run: |
           flutter config --enable-macos-desktop
           flutter config --no-enable-swift-package-manager
-          flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true
+          flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true "--dart-define=ISAR_TEST_TMP=${{ github.workspace }}/packages/isar_test/.dart_tool/test/tmp"
         working-directory: packages/isar_test
       - name: Diagnose on failure
         if: failure()
@@ -346,7 +346,7 @@ jobs:
       - name: Run Flutter Driver tests
         run: |
           flutter config --enable-macos-desktop
-          flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true
+          flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true "--dart-define=ISAR_TEST_TMP=${{ github.workspace }}/packages/isar_test/.dart_tool/test/tmp"
         working-directory: packages/isar_test
       - name: Diagnose on failure
         if: failure()

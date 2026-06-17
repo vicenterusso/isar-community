@@ -115,23 +115,19 @@ Future<Isar> openTempIsar(
 }) async {
   await _prepareTest();
   if (!kIsWeb && directory == null && testTempPath == null) {
-    // /tmp (→ /private/tmp on macOS) is accessible to all processes regardless
-    // of user session context. /var/folders (Directory.systemTemp on macOS) is
-    // user-session-specific and may be inaccessible when the app is launched
-    // headlessly by flutter test -d macos.
-    final random = DateTime.now().microsecondsSinceEpoch;
-    if (Platform.isMacOS || Platform.isLinux) {
-      testTempPath = '/tmp/isar_test_$random';
+    // ISAR_TEST_TMP is set via --dart-define in CI to the workspace path,
+    // which is guaranteed accessible. Falls back to systemTemp for local runs.
+    const envTmp = String.fromEnvironment('ISAR_TEST_TMP');
+    if (envTmp.isNotEmpty) {
+      testTempPath = envTmp;
     } else {
       final tempDir = await Directory.systemTemp.createTemp('isar_test_');
       testTempPath = tempDir.path;
     }
     await Directory(testTempPath!).create(recursive: true);
-    // Write diagnostic file readable from CI step (print not captured on macOS)
     try {
       await File('/tmp/isar_diag.txt').writeAsString(
-        'path=$testTempPath\n'
-        'exists=${await Directory(testTempPath!).exists()}\n',
+        'path=$testTempPath\nexists=${await Directory(testTempPath!).exists()}\n',
       );
     } catch (_) {}
   }
