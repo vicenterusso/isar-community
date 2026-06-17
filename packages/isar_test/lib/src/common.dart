@@ -115,8 +115,24 @@ Future<Isar> openTempIsar(
 }) async {
   await _prepareTest();
   if (!kIsWeb && directory == null && testTempPath == null) {
+    // ignore: avoid_print
+    print('[isar_test] systemTemp=${Directory.systemTemp.path}');
     final tempDir = await Directory.systemTemp.createTemp('isar_test_');
     testTempPath = tempDir.path;
+    final exists = await Directory(testTempPath!).exists();
+    // ignore: avoid_print
+    print('[isar_test] tempPath=$testTempPath exists=$exists');
+    // Verify write access
+    try {
+      final probe = File('${testTempPath!}/.probe');
+      await probe.writeAsString('ok');
+      await probe.delete();
+      // ignore: avoid_print
+      print('[isar_test] write probe: OK');
+    } catch (e) {
+      // ignore: avoid_print
+      print('[isar_test] write probe FAILED: $e');
+    }
   }
 
   final isar = await tOpen(
