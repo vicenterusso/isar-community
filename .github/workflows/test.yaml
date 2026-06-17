@@ -268,8 +268,9 @@ jobs:
           bash tool/build_macos.sh
           install_name_tool -id @rpath/libisar.dylib libisar_macos.dylib
           cp libisar_macos.dylib packages/isar_community_flutter_libs/macos/libisar.dylib
+          cp libisar_macos.dylib libisar.dylib
           xcodebuild -create-xcframework \
-            -library libisar_macos.dylib \
+            -library libisar.dylib \
             -output packages/isar_community_flutter_libs/macos/isar.xcframework
       - name: Prepare Tests
         run: sh tool/prepare_tests.sh
@@ -279,6 +280,16 @@ jobs:
           flutter config --no-enable-swift-package-manager
           flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
+      - name: Diagnose app bundle on failure
+        if: failure()
+        run: |
+          APP="packages/isar_test/build/macos/Build/Products/Debug/isar_test.app"
+          echo "=== Frameworks dir ==="
+          ls -la "${APP}/Contents/Frameworks/" 2>&1
+          echo "=== otool isar deps ==="
+          otool -L "${APP}/Contents/MacOS/isar_test" 2>&1 | grep -i isar || echo "none"
+          echo "=== all isar files in bundle ==="
+          find "${APP}" -name "*isar*" 2>&1
 
   integration_test_ios_spm:
     name: Integration Test iOS (SwiftPM)
@@ -340,6 +351,16 @@ jobs:
           flutter config --enable-macos-desktop
           flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
+      - name: Diagnose app bundle on failure
+        if: failure()
+        run: |
+          APP="packages/isar_test/build/macos/Build/Products/Debug/isar_test.app"
+          echo "=== Frameworks dir ==="
+          ls -la "${APP}/Contents/Frameworks/" 2>&1
+          echo "=== otool isar deps ==="
+          otool -L "${APP}/Contents/MacOS/isar_test" 2>&1 | grep -i isar || echo "none"
+          echo "=== all isar files in bundle ==="
+          find "${APP}" -name "*isar*" 2>&1
 
   integration_test_linux:
     name: Integration Test Linux
