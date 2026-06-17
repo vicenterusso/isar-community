@@ -284,23 +284,18 @@ jobs:
         if: failure()
         run: |
           APP="packages/isar_test/build/macos/Build/Products/Debug/isar_test.app"
+          BIN="${APP}/Contents/MacOS/isar_test"
           echo "=== /tmp/isar_diag.txt ===" && cat /tmp/isar_diag.txt 2>/dev/null || echo "file not found"
           echo "=== Frameworks dir ===" && ls -la "${APP}/Contents/Frameworks/" 2>&1
-          echo "=== otool isar deps ===" && otool -L "${APP}/Contents/MacOS/isar_test" 2>&1 | grep -i isar || echo "none"
+          echo "=== otool isar deps ===" && otool -L "${BIN}" 2>&1 | grep -i isar || echo "none"
+          echo "=== entitlements ===" && codesign -d --entitlements - "${BIN}" 2>&1 | grep -E "sandbox|true|false" || echo "none"
+          echo "=== workspace path test ===" && ls "${{ github.workspace }}/packages/isar_test/.dart_tool/" 2>&1 || echo "not found"
 
   integration_test_ios_spm:
     name: Integration Test iOS (SwiftPM)
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
-      - name: Start simulator
-        uses: futureware-tech/simulator-action@v5
-        with:
-          model: 'iPhone 16'
-          os_version: '>= 26.0'
-          wait_for_boot: true
-          erase_before_boot: true
-          boot_timeout_seconds: 360
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_OVERRIDE || vars.FLUTTER_VERSION }}
@@ -314,6 +309,14 @@ jobs:
         run: sh tool/prepare_tests.sh
       - name: Enable Swift Package Manager
         run: flutter config --enable-swift-package-manager
+      - name: Start simulator
+        uses: futureware-tech/simulator-action@v5
+        with:
+          model: 'iPhone 16'
+          os_version: '>= 26.0'
+          wait_for_boot: true
+          erase_before_boot: true
+          boot_timeout_seconds: 360
       - name: Run Flutter Integration tests
         run: flutter test -d 'iPhone 16' integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
@@ -352,9 +355,12 @@ jobs:
         if: failure()
         run: |
           APP="packages/isar_test/build/macos/Build/Products/Debug/isar_test.app"
+          BIN="${APP}/Contents/MacOS/isar_test"
           echo "=== /tmp/isar_diag.txt ===" && cat /tmp/isar_diag.txt 2>/dev/null || echo "file not found"
           echo "=== Frameworks dir ===" && ls -la "${APP}/Contents/Frameworks/" 2>&1
-          echo "=== otool isar deps ===" && otool -L "${APP}/Contents/MacOS/isar_test" 2>&1 | grep -i isar || echo "none"
+          echo "=== otool isar deps ===" && otool -L "${BIN}" 2>&1 | grep -i isar || echo "none"
+          echo "=== entitlements ===" && codesign -d --entitlements - "${BIN}" 2>&1 | grep -E "sandbox|true|false" || echo "none"
+          echo "=== workspace path test ===" && ls "${{ github.workspace }}/packages/isar_test/.dart_tool/" 2>&1 || echo "not found"
 
   integration_test_linux:
     name: Integration Test Linux
