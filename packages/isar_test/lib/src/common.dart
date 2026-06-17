@@ -115,24 +115,25 @@ Future<Isar> openTempIsar(
 }) async {
   await _prepareTest();
   if (!kIsWeb && directory == null && testTempPath == null) {
-    // ignore: avoid_print
-    print('[isar_test] systemTemp=${Directory.systemTemp.path}');
-    final tempDir = await Directory.systemTemp.createTemp('isar_test_');
-    testTempPath = tempDir.path;
-    final exists = await Directory(testTempPath!).exists();
-    // ignore: avoid_print
-    print('[isar_test] tempPath=$testTempPath exists=$exists');
-    // Verify write access
-    try {
-      final probe = File('${testTempPath!}/.probe');
-      await probe.writeAsString('ok');
-      await probe.delete();
-      // ignore: avoid_print
-      print('[isar_test] write probe: OK');
-    } catch (e) {
-      // ignore: avoid_print
-      print('[isar_test] write probe FAILED: $e');
+    // /tmp (→ /private/tmp on macOS) is accessible to all processes regardless
+    // of user session context. /var/folders (Directory.systemTemp on macOS) is
+    // user-session-specific and may be inaccessible when the app is launched
+    // headlessly by flutter test -d macos.
+    final random = DateTime.now().microsecondsSinceEpoch;
+    if (Platform.isMacOS || Platform.isLinux) {
+      testTempPath = '/tmp/isar_test_$random';
+    } else {
+      final tempDir = await Directory.systemTemp.createTemp('isar_test_');
+      testTempPath = tempDir.path;
     }
+    await Directory(testTempPath!).create(recursive: true);
+    // Write diagnostic file readable from CI step (print not captured on macOS)
+    try {
+      await File('/tmp/isar_diag.txt').writeAsString(
+        'path=$testTempPath\n'
+        'exists=${await Directory(testTempPath!).exists()}\n',
+      );
+    } catch (_) {}
   }
 
   final isar = await tOpen(

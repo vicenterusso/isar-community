@@ -200,7 +200,7 @@ jobs:
       - name: Prepare Tests
         run: sh tool/prepare_tests.sh
       - name: Run Flutter Integration tests
-        run: flutter test integration_test/integration_test.dart --dart-define STRESS=true
+        run: flutter test -d ios integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
 
   integration_test_android:
@@ -280,16 +280,13 @@ jobs:
           flutter config --no-enable-swift-package-manager
           flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
-      - name: Diagnose app bundle on failure
+      - name: Diagnose on failure
         if: failure()
         run: |
           APP="packages/isar_test/build/macos/Build/Products/Debug/isar_test.app"
-          echo "=== Frameworks dir ==="
-          ls -la "${APP}/Contents/Frameworks/" 2>&1
-          echo "=== otool isar deps ==="
-          otool -L "${APP}/Contents/MacOS/isar_test" 2>&1 | grep -i isar || echo "none"
-          echo "=== all isar files in bundle ==="
-          find "${APP}" -name "*isar*" 2>&1
+          echo "=== /tmp/isar_diag.txt ===" && cat /tmp/isar_diag.txt 2>/dev/null || echo "file not found"
+          echo "=== Frameworks dir ===" && ls -la "${APP}/Contents/Frameworks/" 2>&1
+          echo "=== otool isar deps ===" && otool -L "${APP}/Contents/MacOS/isar_test" 2>&1 | grep -i isar || echo "none"
 
   integration_test_ios_spm:
     name: Integration Test iOS (SwiftPM)
@@ -318,7 +315,7 @@ jobs:
       - name: Enable Swift Package Manager
         run: flutter config --enable-swift-package-manager
       - name: Run Flutter Integration tests
-        run: flutter test integration_test/integration_test.dart --dart-define STRESS=true
+        run: flutter test -d ios integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
 
   integration_test_macos_spm:
@@ -351,16 +348,13 @@ jobs:
           flutter config --enable-macos-desktop
           flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true
         working-directory: packages/isar_test
-      - name: Diagnose app bundle on failure
+      - name: Diagnose on failure
         if: failure()
         run: |
           APP="packages/isar_test/build/macos/Build/Products/Debug/isar_test.app"
-          echo "=== Frameworks dir ==="
-          ls -la "${APP}/Contents/Frameworks/" 2>&1
-          echo "=== otool isar deps ==="
-          otool -L "${APP}/Contents/MacOS/isar_test" 2>&1 | grep -i isar || echo "none"
-          echo "=== all isar files in bundle ==="
-          find "${APP}" -name "*isar*" 2>&1
+          echo "=== /tmp/isar_diag.txt ===" && cat /tmp/isar_diag.txt 2>/dev/null || echo "file not found"
+          echo "=== Frameworks dir ===" && ls -la "${APP}/Contents/Frameworks/" 2>&1
+          echo "=== otool isar deps ===" && otool -L "${APP}/Contents/MacOS/isar_test" 2>&1 | grep -i isar || echo "none"
 
   integration_test_linux:
     name: Integration Test Linux
