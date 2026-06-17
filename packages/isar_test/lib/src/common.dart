@@ -115,9 +115,8 @@ Future<Isar> openTempIsar(
 }) async {
   await _prepareTest();
   if (!kIsWeb && directory == null && testTempPath == null) {
-    final dartToolDir = path.join(Directory.current.path, '.dart_tool');
-    testTempPath = path.join(dartToolDir, 'test', 'tmp');
-    await Directory(testTempPath!).create(recursive: true);
+    final tempDir = await Directory.systemTemp.createTemp('isar_test_');
+    testTempPath = tempDir.path;
   }
 
   final isar = await tOpen(
