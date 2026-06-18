@@ -125,11 +125,6 @@ Future<Isar> openTempIsar(
       testTempPath = tempDir.path;
     }
     await Directory(testTempPath!).create(recursive: true);
-    try {
-      await File('/tmp/isar_diag.txt').writeAsString(
-        'path=$testTempPath\nexists=${await Directory(testTempPath!).exists()}\n',
-      );
-    } catch (_) {}
   }
 
   final isar = await tOpen(

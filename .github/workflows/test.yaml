@@ -1,7 +1,7 @@
 name: Dart CI
 
 env:
-  FLUTTER_OVERRIDE: "3.44.0"
+  FLUTTER_OVERRIDE: "3.35.1"
 
 on: [push, pull_request]
 
@@ -280,16 +280,6 @@ jobs:
           flutter config --no-enable-swift-package-manager
           flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true "--dart-define=ISAR_TEST_TMP=${{ github.workspace }}/packages/isar_test/.dart_tool/test/tmp"
         working-directory: packages/isar_test
-      - name: Diagnose on failure
-        if: failure()
-        run: |
-          APP="packages/isar_test/build/macos/Build/Products/Debug/isar_test.app"
-          BIN="${APP}/Contents/MacOS/isar_test"
-          echo "=== /tmp/isar_diag.txt ===" && cat /tmp/isar_diag.txt 2>/dev/null || echo "file not found"
-          echo "=== Frameworks dir ===" && ls -la "${APP}/Contents/Frameworks/" 2>&1
-          echo "=== otool isar deps ===" && otool -L "${BIN}" 2>&1 | grep -i isar || echo "none"
-          echo "=== entitlements ===" && codesign -d --entitlements - "${BIN}" 2>&1 | grep -E "sandbox|true|false" || echo "none"
-          echo "=== workspace path test ===" && ls "${{ github.workspace }}/packages/isar_test/.dart_tool/" 2>&1 || echo "not found"
 
   integration_test_ios_spm:
     name: Integration Test iOS (SwiftPM)
@@ -351,16 +341,6 @@ jobs:
           flutter config --enable-macos-desktop
           flutter test -d macos integration_test/integration_test.dart --dart-define STRESS=true "--dart-define=ISAR_TEST_TMP=${{ github.workspace }}/packages/isar_test/.dart_tool/test/tmp"
         working-directory: packages/isar_test
-      - name: Diagnose on failure
-        if: failure()
-        run: |
-          APP="packages/isar_test/build/macos/Build/Products/Debug/isar_test.app"
-          BIN="${APP}/Contents/MacOS/isar_test"
-          echo "=== /tmp/isar_diag.txt ===" && cat /tmp/isar_diag.txt 2>/dev/null || echo "file not found"
-          echo "=== Frameworks dir ===" && ls -la "${APP}/Contents/Frameworks/" 2>&1
-          echo "=== otool isar deps ===" && otool -L "${BIN}" 2>&1 | grep -i isar || echo "none"
-          echo "=== entitlements ===" && codesign -d --entitlements - "${BIN}" 2>&1 | grep -E "sandbox|true|false" || echo "none"
-          echo "=== workspace path test ===" && ls "${{ github.workspace }}/packages/isar_test/.dart_tool/" 2>&1 || echo "not found"
 
   integration_test_linux:
     name: Integration Test Linux
