@@ -112,7 +112,7 @@ impl IsarInstance {
 
         Self::move_old_database(name, dir, &isar_file);
 
-        let db_count = schema.count_dbs() as u64 + 3;
+        let db_count = schema.count_dbs() as u64 + 4; // +1 for _info, +1 for _autoincrement, +2 buffer
         let env = Env::create(
             &isar_file,
             db_count,
