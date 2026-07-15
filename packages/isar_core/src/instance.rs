@@ -348,6 +348,7 @@ impl IsarInstance {
     pub fn verify(&self, txn: &mut IsarTxn) -> Result<()> {
         let mut db_names = vec![];
         db_names.push("_info".to_string());
+        db_names.push("_autoincrement".to_string());
         for col in &self.collections {
             db_names.push(col.name.clone());
             for index in &col.indexes {
