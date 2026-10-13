@@ -104,11 +104,6 @@ jobs:
           asset_name: ${{ matrix.extra_artifact_name }}
           tag: ${{ github.ref }}
 
-  testlab:
-    needs: build_binaries
-    uses: ./.github/workflows/testlab.yaml
-    secrets: inherit
-
   build_inspector:
     name: Build Inspector
     needs: build_binaries
@@ -194,7 +189,7 @@ jobs:
   cleanup_on_failure:
     name: Cleanup Release on Failure
     runs-on: ubuntu-24.04
-    needs: [build_binaries, testlab, build_inspector, upload_to_repo]
+    needs: [build_binaries, build_inspector, upload_to_repo]
     if: always() && contains(needs.*.result, 'failure')
     permissions:
       contents: write
