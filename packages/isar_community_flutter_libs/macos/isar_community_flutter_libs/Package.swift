@@ -15,7 +15,10 @@ let package = Package(
             dependencies: [
                 .target(name: "isar"),
             ],
-            path: "Sources/isar_community_flutter_libs"
+            path: "Sources/isar_community_flutter_libs",
+            resources: [
+                .process("PrivacyInfo.xcprivacy"),
+            ]
         ),
         .binaryTarget(
             name: "isar",
