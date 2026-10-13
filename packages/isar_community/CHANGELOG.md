@@ -1,3 +1,8 @@
+## 3.4.1
+
+### Updates
+- Widened `analyzer` constraint in `isar_community_generator` from `>=8.0.0 <11.0.0` to `>=8.0.0 <15.0.0`, fixing version solving conflicts with current `build_runner`, `freezed` and `riverpod_generator`
+
 ## 3.4.0
 
 ### Features
