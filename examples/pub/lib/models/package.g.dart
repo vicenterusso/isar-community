@@ -146,7 +146,7 @@ const PackageSchema = CollectionSchema(
   getId: _packageGetId,
   getLinks: _packageGetLinks,
   attach: _packageAttach,
-  version: '3.3.2',
+  version: '3.4.0',
 );
 
 int _packageEstimateSize(
