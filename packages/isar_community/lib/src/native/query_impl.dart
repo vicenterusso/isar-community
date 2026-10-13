@@ -15,11 +15,11 @@ import 'package:isar_community/src/native/txn.dart';
 typedef QueryDeserialize<T> = List<T> Function(CObjectSet);
 
 class QueryImpl<T> extends Query<T> implements Finalizable {
-  static final _finalizer = NativeFinalizer(isarQueryFree);
-
   QueryImpl(this.col, this.queryPtr, this.deserialize, this.propertyId) {
     _finalizer.attach(this, queryPtr.cast());
   }
+
+  static final _finalizer = NativeFinalizer(isarQueryFree);
   static const int maxLimit = 4294967295;
 
   final IsarCollectionImpl<dynamic> col;
