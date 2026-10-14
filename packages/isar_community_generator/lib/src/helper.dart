@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart' hide Name;
 import 'package:analyzer/dart/element/type.dart';
 import 'package:dartx/dartx.dart';
@@ -16,9 +15,7 @@ const TypeChecker _backlinkChecker = TypeChecker.typeNamed(Backlink);
 extension ClassElementX on ClassElement {
   bool get hasZeroArgsConstructor {
     return constructors.any(
-      (c) =>
-          c.isPublic &&
-          !c.formalParameters.any((FormalParameterElement p) => !p.isOptional),
+      (c) => c.isPublic && !c.formalParameters.any((p) => !p.isOptional),
     );
   }
 
@@ -39,7 +36,7 @@ extension ClassElementX on ClassElement {
             ],
         ]
         .where(
-          (PropertyInducingElement e) =>
+          (e) =>
               e.isPublic &&
               !e.isStatic &&
               !_ignoreChecker.hasAnnotationOf(e.nonSynthetic) &&
@@ -93,7 +90,7 @@ extension PropertyElementX on PropertyInducingElement {
       ];
     }
 
-    return annotations.map((DartObject ann) {
+    return annotations.map((ann) {
       final rawComposite = ann.getField('composite')!.toListValue();
       final composite = <CompositeIndex>[];
       if (rawComposite != null) {

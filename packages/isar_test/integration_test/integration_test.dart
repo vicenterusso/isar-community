@@ -16,7 +16,10 @@ void main() async {
   group('Integration test', () {
     setUpAll(() async {
       if (!kIsWeb) {
+        // path_provider may return a directory that does not exist yet
+        // (e.g. Library/Caches/<bundle id> in the macOS sandbox).
         final dir = await getTemporaryDirectory();
+        await dir.create(recursive: true);
         testTempPath = dir.path;
       }
     });

@@ -117,7 +117,7 @@ class IsarAnalyzer {
     }
 
     final constructor = modelClass.constructors.firstOrNullWhere(
-      (ConstructorElement c) => null == c.firstFragment.periodOffset,
+      (c) => null == c.firstFragment.periodOffset,
     );
     if (constructor == null) {
       err('Class needs an unnamed constructor.', modelClass);

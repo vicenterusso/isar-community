@@ -16,8 +16,10 @@ typedef QueryDeserialize<T> = List<T> Function(CObjectSet);
 
 class QueryImpl<T> extends Query<T> implements Finalizable {
   QueryImpl(this.col, this.queryPtr, this.deserialize, this.propertyId) {
-    NativeFinalizer(isarQueryFree).attach(this, queryPtr.cast());
+    _finalizer.attach(this, queryPtr.cast());
   }
+
+  static final _finalizer = NativeFinalizer(isarQueryFree);
   static const int maxLimit = 4294967295;
 
   final IsarCollectionImpl<dynamic> col;
