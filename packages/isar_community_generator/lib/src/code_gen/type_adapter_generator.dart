@@ -231,11 +231,11 @@ String generateDeserialize(ObjectInfo object) {
       final object = ${object.dartName}(''';
 
   final propertiesByMode = object.properties.groupBy(
-    (ObjectProperty p) => p.deserialize,
+    (p) => p.deserialize,
   );
   final positional = propertiesByMode[PropertyDeser.positionalParam] ?? [];
   final sortedPositional = positional.sortedBy(
-    (ObjectProperty p) => p.constructorPosition!,
+    (p) => p.constructorPosition!,
   );
   for (final p in sortedPositional) {
     final index = object.objectProperties.indexOf(p);

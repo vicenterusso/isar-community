@@ -136,7 +136,7 @@ Future<Isar> openTempIsar(
     });
   }
 
-  // ignore: invalid_use_of_visible_for_testing_member
+  // ignore: invalid_use_of_visible_for_testing_member, experimental_member_use
   if (!kIsWeb) await isar.verify();
   return isar;
 }

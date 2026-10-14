@@ -1,3 +1,18 @@
+## 3.4.1
+
+### Updates
+- Widened `analyzer` constraint in `isar_community_generator` from `>=8.0.0 <11.0.0` to `>=8.0.0 <15.0.0`, fixing version solving conflicts with current `build_runner`, `freezed` and `riverpod_generator`
+
+## 3.4.0
+
+### Features
+- [iOS/macOS] Added Swift Package Manager support to `isar_community_flutter_libs` (CocoaPods remains supported) ([#119](https://github.com/isar-community/isar-community/pull/119))
+- [macOS] Added the privacy manifest (`PrivacyInfo.xcprivacy`) to the Swift package
+
+### Fixes
+- Fixed a native memory leak in queries and Isar instances: the `NativeFinalizer`s are now `static final`, so they stay reachable and their finalize callbacks actually run ([#100](https://github.com/isar-community/isar-community/pull/100))
+- Fixed lint and formatting issues across the codebase ([#149](https://github.com/isar-community/isar-community/pull/149))
+
 ## 3.3.2
 
 ### Updates
